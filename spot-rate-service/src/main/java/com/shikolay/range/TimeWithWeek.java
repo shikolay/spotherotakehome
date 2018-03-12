@@ -13,7 +13,7 @@ public class TimeWithWeek {
 
     boolean laterToday(TimeWithWeek input) {
         if (this.weekDay.equals(input.weekDay)) {
-            return (this.time.compareTo(input.time) <= 0);
+            return (this.time.compareTo(input.time) < 0);
         } else {
             return false;
         }
@@ -21,7 +21,7 @@ public class TimeWithWeek {
 
     boolean earlierToday(TimeWithWeek input) {
         if (this.weekDay.equals(input.weekDay)) {
-            return (this.time.compareTo(input.time) >= 0);
+            return (this.time.compareTo(input.time) > 0);
         } else {
             return false;
         }

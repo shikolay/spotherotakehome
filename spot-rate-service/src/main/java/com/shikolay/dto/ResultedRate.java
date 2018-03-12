@@ -4,17 +4,17 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement
 public class ResultedRate {
-    private Long rate;
+    private String rate;
 
     public ResultedRate() {
     }
 
 
-    public Long getRate() {
+    public String getRate() {
         return rate;
     }
 
-    public void setRate(Long rate) {
+    public void setRate(String rate) {
         this.rate = rate;
     }
 }

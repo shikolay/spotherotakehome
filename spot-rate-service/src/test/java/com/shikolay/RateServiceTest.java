@@ -49,6 +49,6 @@ public class RateServiceTest {
                 .queryParam("from", "2015-07-01T12:00:00Z")
                 .queryParam("to", "2015-07-01T12:00:00Z")
                 .request().get(ResultedRate.class);
-        assertTrue(1435752000000L == responseMsg.getRate());
+        assertTrue("1435752000000".equals(responseMsg.getRate()));
     }
 }

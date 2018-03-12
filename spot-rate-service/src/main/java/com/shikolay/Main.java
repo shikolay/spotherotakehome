@@ -1,5 +1,6 @@
 package com.shikolay;
 
+import com.shikolay.dao.JSONRanges;
 import org.glassfish.grizzly.http.server.HttpServer;
 import org.glassfish.jersey.grizzly2.httpserver.GrizzlyHttpServerFactory;
 import org.glassfish.jersey.jackson.JacksonFeature;
@@ -39,6 +40,9 @@ public class Main {
      * @throws IOException
      */
     public static void main(String[] args) throws IOException {
+        JSONRanges dataSource = JSONRanges.getInstance();
+        dataSource.loadDataFromFile("data.json");
+
         final HttpServer server = startServer();
         System.out.println(String.format("Jersey app started with WADL available at "
                 + "%sapplication.wadl\nHit enter to stop it...", BASE_URI));
