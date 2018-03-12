@@ -18,7 +18,10 @@ public class RangePool {
         ArrayList<PricedTimeRange> result = new ArrayList<>();
 
         for (PricedTimeRange currentRange : ranges) {
-
+            if (currentRange.getLeftBound().laterToday(queryRange.getLeftBound()) &&
+                    currentRange.getRightBound().earlierToday(queryRange.getRightBound())) {
+                result.add(currentRange);
+            }
         }
 
         return result;
