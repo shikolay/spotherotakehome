@@ -1,5 +1,7 @@
 package com.shikolay;
 
+import com.shikolay.dto.ResultedRate;
+
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
@@ -8,8 +10,8 @@ import javax.ws.rs.core.MediaType;
 /**
  * Root resource (exposed at "myresource" path)
  */
-@Path("myresource")
-public class MyResource {
+@Path("rate")
+public class RateService {
 
     /**
      * Method handling HTTP GET requests. The returned object will be sent
@@ -18,8 +20,10 @@ public class MyResource {
      * @return String that will be returned as a text/plain response.
      */
     @GET
-    @Produces(MediaType.TEXT_PLAIN)
-    public String getIt() {
-        return "Got it!";
+    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    public ResultedRate getIt() {
+        ResultedRate rate = new ResultedRate();
+        rate.setRate(100500L);
+        return rate;
     }
 }
