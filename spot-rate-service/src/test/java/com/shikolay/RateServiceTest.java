@@ -4,12 +4,15 @@ import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.WebTarget;
 
+import com.shikolay.dto.ResultedRate;
 import org.glassfish.grizzly.http.server.HttpServer;
 
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 public class RateServiceTest {
 
@@ -42,7 +45,10 @@ public class RateServiceTest {
      */
     @Test
     public void testGetIt() {
-        String responseMsg = target.path("myresource").request().get(String.class);
-        assertEquals("Got it!", responseMsg);
+        ResultedRate responseMsg = target.path("rate")
+                .queryParam("from", "2015-07-01T12:00:00Z")
+                .queryParam("to", "2015-07-01T12:00:00Z")
+                .request().get(ResultedRate.class);
+        assertTrue(1435752000000L == responseMsg.getRate());
     }
 }

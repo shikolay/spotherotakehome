@@ -1,11 +1,14 @@
 package com.shikolay;
 
 import com.shikolay.dto.ResultedRate;
+import org.joda.time.DateTime;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
+import java.util.Date;
 
 /**
  * Root resource (exposed at "myresource" path)
@@ -21,9 +24,11 @@ public class RateService {
      */
     @GET
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public ResultedRate getIt() {
+    public ResultedRate getRate(@QueryParam("from") String from,
+                                @QueryParam("to") String to) {
         ResultedRate rate = new ResultedRate();
-        rate.setRate(100500L);
+        DateTime dateFrom = new DateTime(from);
+        rate.setRate(dateFrom.getMillis());
         return rate;
     }
 }
