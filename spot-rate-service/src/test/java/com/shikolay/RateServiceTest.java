@@ -4,6 +4,7 @@ import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.WebTarget;
 
+import com.shikolay.dao.JSONRanges;
 import com.shikolay.dto.ResultedRate;
 import org.glassfish.grizzly.http.server.HttpServer;
 
@@ -21,34 +22,27 @@ public class RateServiceTest {
 
     @Before
     public void setUp() throws Exception {
+        JSONRanges jsonDAO = JSONRanges.getInstance();
+        jsonDAO.loadDataFromFile("mock.json");
         // start the server
         server = Main.startServer();
         // create the client
         Client c = ClientBuilder.newClient();
-
-        // uncomment the following line if you want to enable
-        // support for JSON in the client (you also have to uncomment
-        // dependency on jersey-media-json module in pom.xml and Main.startServer())
-        // --
-        // c.configuration().enable(new org.glassfish.jersey.media.json.JsonJaxbFeature());
 
         target = c.target(Main.BASE_URI);
     }
 
     @After
     public void tearDown() throws Exception {
-        server.stop();
+        server.shutdownNow();
     }
 
-    /**
-     * Test to see that the message "Got it!" is sent in the response.
-     */
     @Test
-    public void testGetIt() {
+    public void testGetRate() {
         ResultedRate responseMsg = target.path("rate")
-                .queryParam("from", "2015-07-01T12:00:00Z")
+                .queryParam("from", "2015-07-01T07:00:00Z")
                 .queryParam("to", "2015-07-01T12:00:00Z")
                 .request().get(ResultedRate.class);
-        assertTrue("1435752000000".equals(responseMsg.getRate()));
+        assertTrue("1500".equals(responseMsg.getRate()));
     }
 }

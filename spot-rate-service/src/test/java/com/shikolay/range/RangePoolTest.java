@@ -1,10 +1,13 @@
 package com.shikolay.range;
 
+import com.shikolay.dto.RangeEntry;
+import com.shikolay.dto.RangesData;
 import org.joda.time.DateTime;
 import org.joda.time.LocalTime;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
@@ -61,6 +64,36 @@ public class RangePoolTest {
         List<PricedTimeRange> result = testPool.findAllEncapsulating(testRange);
 
         assertEquals(result.size(), 0);
+
+    }
+
+    @Test
+    public void testCopyConstructor() {
+        RangeEntry mockEntry = new RangeEntry();
+        mockEntry.setDays("mon,tues,wed,thurs,fri");
+        mockEntry.setTimes("0600-1800");
+        mockEntry.setPrice(1500L);
+
+        List<RangeEntry> mockList = new ArrayList<>();
+        mockList.add(mockEntry);
+
+        RangesData mockRaw = new RangesData();
+        mockRaw.setRates(mockList);
+
+        RangePool currentPool = new RangePool(mockRaw);
+
+        TimeWithWeek leftBound = new TimeWithWeek("wed", new LocalTime("09:00"));
+        TimeWithWeek rightBound = new TimeWithWeek("wed", new LocalTime("11:00"));
+        PricedTimeRange testRange = new PricedTimeRange(leftBound, rightBound, 0L);
+
+        List<PricedTimeRange> result = currentPool.findAllEncapsulating(testRange);
+
+        assertEquals(result.size(), 1);
+
+        PricedTimeRange encapsulating = result.get(0);
+
+        assertTrue(encapsulating.getPrice() == 1500L);
+
 
     }
 }

@@ -22,7 +22,7 @@ public class TimeWithWeekTest {
 
     @Test
     public void testLaterTodayEqual() {
-        assertTrue(left.laterToday(left));
+        assertFalse(left.laterToday(left));
     }
 
     @Test
@@ -37,7 +37,7 @@ public class TimeWithWeekTest {
 
     @Test
     public void testEarlierTodayEqual() {
-        assertTrue(right.earlierToday(right));
+        assertFalse(right.earlierToday(right));
     }
 
 

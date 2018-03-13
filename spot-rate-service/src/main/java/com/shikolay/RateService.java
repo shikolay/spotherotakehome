@@ -1,7 +1,13 @@
 package com.shikolay;
 
+import com.codahale.metrics.MetricRegistry;
+import com.codahale.metrics.SharedMetricRegistries;
+import com.codahale.metrics.Snapshot;
+import com.codahale.metrics.Timer;
+import com.codahale.metrics.annotation.Timed;
 import com.shikolay.dao.JSONRanges;
 import com.shikolay.dto.ResultedRate;
+import com.shikolay.dto.TimerStats;
 import com.shikolay.range.PricedTimeRange;
 import com.shikolay.range.TimeWithWeek;
 import org.joda.time.DateTime;
@@ -16,10 +22,8 @@ import javax.ws.rs.core.MediaType;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.SortedMap;
 
-/**
- * Root resource (exposed at "myresource" path)
- */
 @Path("rate")
 public class RateService {
     private HashMap<Integer, String> dayIndexNameMap;
@@ -35,13 +39,9 @@ public class RateService {
         dayIndexNameMap.put(7, "sun");
     }
 
-    /**
-     * Method handling HTTP GET requests. The returned object will be sent
-     * to the client as "text/plain" media type.
-     *
-     * @return String that will be returned as a text/plain response.
-     */
+
     @GET
+    @Timed
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public ResultedRate getRate(@QueryParam("from") String from,
                                 @QueryParam("to") String to) {
@@ -69,5 +69,15 @@ public class RateService {
         }
 
         return rate;
+    }
+
+    @Path("/metrics")
+    @GET
+    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    public TimerStats getMetrics() {
+        Timer currentTimer = SharedMetricRegistries.getDefault().timer(MetricRegistry.name(RateService.class, "getRate"));
+        Snapshot summary = currentTimer.getSnapshot();
+
+        return new TimerStats(summary.getMean(), summary.getMedian(), summary.getStdDev());
     }
 }
