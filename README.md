@@ -19,6 +19,7 @@ App expose only 3 endpoints
 `/application.wadl` - XML file describing functional endpoints in this app
 
 ####Rate endpoint
+
 `/rate` main endpoint, let you query your time intervals. 
 This endpoint accept 2 query params `from` and `to` which 
 should be ISO 8601 instants in time 
@@ -37,6 +38,7 @@ curl "http://localhost:8080/rate?from=2015-07-01T07:00:00Z&to=2015-07-01T12:00:0
 
 
 ####Metrics endpoint
+
 `/rate/metrics` will return accumulated performance stats on `/rate` endpoint
 
 
