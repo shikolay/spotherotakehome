@@ -44,8 +44,8 @@ public class Main {
     /**
      * Main method.
      *
-     * @param args
-     * @throws IOException
+     * @param args command line args (first indicate JSON data fie path)
+     * @throws IOException possible exception while dealing with files
      */
     public static void main(String[] args) throws IOException {
         String dataPath = "data.json";
