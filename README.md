@@ -41,6 +41,16 @@ curl "http://localhost:8080/rate?from=2015-07-01T07:00:00Z&to=2015-07-01T12:00:0
 
 `/rate/metrics` will return accumulated performance stats on `/rate` endpoint
 
+###### Example request
+```
+curl "localhost:8080/rate/metrics"
+```
+
+###### Example response
+```
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?><timerStats><mean>1.3799172295736223E7</mean><median>1.3799149E7</median><stdDev>681051.8064735931</stdDev></timerStats>
+```
+All numbers is in nanoseconds
 
 ## Running the tests
 ```
