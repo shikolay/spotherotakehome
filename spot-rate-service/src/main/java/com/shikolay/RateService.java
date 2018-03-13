@@ -39,7 +39,17 @@ public class RateService {
         dayIndexNameMap.put(7, "sun");
     }
 
-
+    /**
+     * Endpoint that allow you to query rate of encapsulating interval,
+     * given input interval
+     *
+     * @param from String representation of interval start time,
+     *             for all supported formats look joda time docs
+     * @param to   String representation of interval end time,
+     *             for all supported formats look joda time docs
+     * @return ResultedRate object with rate equal to encapsulating interval,
+     * if one exists and 'unavailable' otherwise
+     */
     @GET
     @Timed
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
@@ -71,6 +81,11 @@ public class RateService {
         return rate;
     }
 
+    /**
+     * Metrics stats for /rate endpoint
+     *
+     * @return TimerStats with mean, median and stdDev
+     */
     @Path("/metrics")
     @GET
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})

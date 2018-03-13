@@ -35,6 +35,12 @@ public class RangePool {
         }
     }
 
+    /**
+     * Parse time in format hhmm to LocalTime
+     *
+     * @param timeStr String representation of time
+     * @return LocalTime instance equal to time passed in
+     */
     private LocalTime parseTimeString(String timeStr) {
         String hours = timeStr.substring(0, 2);
         String mins = timeStr.substring(2);
@@ -45,6 +51,12 @@ public class RangePool {
         ranges.add(newRange);
     }
 
+    /**
+     * Main logic of tha application. Perform interval search
+     *
+     * @param queryRange input interval
+     * @return encapsulating intervals
+     */
     public List<PricedTimeRange> findAllEncapsulating(PricedTimeRange queryRange) {
         ArrayList<PricedTimeRange> result = new ArrayList<>();
 
